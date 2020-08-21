@@ -21,8 +21,7 @@ router.post('/notes', (req, res) => {
     const item = {
       id: uuid.v1(),
       title: req.body.title,
-      text: req.body.text,
-      isDone: req.body.isDone
+      text: req.body.text
     }
     notes.push(item)
 
@@ -40,12 +39,6 @@ router.put('/notes/:id', (req, res) => {
     if (err) { console.log(err) }
 
     const notes = JSON.parse(data)
-
-    for (let i = 0; i < notes.length; i++) {
-      if (notes[i].id === req.params.id) {
-        notes[i].isDone = req.body.isDone
-      }
-    }
 
     fs.writeFile(join(__dirname, '..', 'db', 'db.json'), JSON.stringify(notes), err => {
       if (err) { console.log(err) }
